@@ -11,6 +11,9 @@ const api = {
       case 'currencies':
         resource = 'currencies';
         break;
+      case 'rate':
+        resource = `rate/${params.base}/${params.target}`;
+        break;
       default:
         resource = `${key}`;
     }

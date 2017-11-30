@@ -10,20 +10,24 @@ const store = {
     cache.init();
   },
 
-  get: async (key, data) => {
+  get: async (key, params) => {
     let value, error;
 
+    // We build a special key for caching purpuses on rates
+    // based on the base and the target currencies.
+    let cacheKey = key === 'rate' ? `${params.base}-${params.target}` : key;
+
     // Try first to look into the cache!
-    [error, value] = await cache.get(key);
+    [error, value] = await cache.get(cacheKey);
 
     // Something went wrong or cache outdated
     if (error || value == null) {
       // So let's retrieve data from the API!
-      [error, value] = await api.get(key, data);
+      [error, value] = await api.get(key, params);
 
       if (!error) {
         // Save value into cache
-        await cache.set(key, value);
+        await cache.set(cacheKey, value);
       } else {
         // The data cannot be retrieved from the API
         //

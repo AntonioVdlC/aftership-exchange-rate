@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.use('/currencies', require('./currencies'));
-router.use('/rate', require('./rate'));
+const get = require('../../../api/rate/get');
+
+router.get('/:base/:target', get);
 
 module.exports = router;
