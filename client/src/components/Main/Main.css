@@ -1,0 +1,6 @@
+.main {
+  min-height: calc(100vh - 88px); /* Magic numbers ... */
+  max-width: 1024px;
+  margin: auto;
+  padding: 12px;
+}

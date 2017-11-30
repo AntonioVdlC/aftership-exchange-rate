@@ -1,0 +1,11 @@
+.footer {
+  background-color: #bdbdbd;
+  padding: 12px;
+  color: white;
+  font-size: 10px;
+}
+
+.footer .footer-content {
+  max-width: 1024px;
+  margin: auto;
+}
