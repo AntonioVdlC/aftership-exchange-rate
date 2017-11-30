@@ -1,0 +1,11 @@
+.whisper {
+  margin: 6px 0px;
+  padding: 12px;
+  background-color: #bdbdbd;
+  color: #212121;
+}
+
+.whisper.error {
+  background-color: #f44336;
+  color: white;
+}
