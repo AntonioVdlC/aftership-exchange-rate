@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+// API
+app.use('/api', require('./routes/api'));
+
 // Serve static files only in production
 if (process.env.NODE_ENV === 'production') {
   const clientPath = 'client/build';

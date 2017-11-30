@@ -22,12 +22,11 @@ class App extends Component {
     this.setState(prev => ({ ...prev, [input]: value }));
   };
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
+    const { store } = this.props;
+
     try {
-      let currencies = [
-        { symbol: 'EUR', name: 'Euro' },
-        { symbol: 'USD', name: 'US Dollar' }
-      ];
+      let currencies = await store.get('currencies');
       this.setState(prev => ({ ...prev, currencies }));
     } catch (err) {
       this.setState(prev => ({ ...prev, error: true }));
