@@ -11,17 +11,17 @@ const store = {
   },
 
   get: async (key, params) => {
-    let value, error;
+    let cacheValue, value, error;
 
     // We build a special key for caching purpuses on rates
     // based on the base and the target currencies.
     let cacheKey = key === 'rate' ? `${params.base}-${params.target}` : key;
 
     // Try first to look into the cache!
-    [error, value] = await cache.get(cacheKey);
+    [error, cacheValue] = await cache.get(cacheKey);
 
     // Something went wrong or cache outdated
-    if (error || value == null) {
+    if (error || cacheValue == null) {
       // So let's retrieve data from the API!
       [error, value] = await api.get(key, params);
 
@@ -31,10 +31,16 @@ const store = {
       } else {
         // The data cannot be retrieved from the API
         //
-        // If the data is only outdated, let's just return it and
-        // swallow the error
-        if (value != null) error = null;
+        // If the data from cache is only outdated, let's just return
+        // it and swallow the error
+        if (cacheValue != null) {
+          value = cacheValue;
+          error = null;
+        }
       }
+    } else {
+      // The data from the cache is valid, so let's just return it!
+      value = cacheValue;
     }
 
     return new Promise((resolve, reject) => {
